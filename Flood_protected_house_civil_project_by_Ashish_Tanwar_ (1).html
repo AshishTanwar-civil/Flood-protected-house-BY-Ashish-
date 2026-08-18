@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amphibious Foundation Model House — Flood-Resilient Build Guide</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%2312222E'/%3E%3Cpath d='M6 13l1-6h10l1 6M6 13v6h12v-6' stroke='%234FA8A0' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12222E; --ink-2:#1D3A4D; --ink-soft:#3C566A;
+    --paper:#EAEFEF; --paper-2:#DCE4E3; --card:#F6F9F8; --white:#F7FAF9;
+    --accent:#E2812E; --accent-2:#4FA8A0;
+    --water:#2B7A8C; --water-deep:#123847; --concrete:#8B8573; --grave:#A63D2C;
+    --line:rgba(18,34,46,.16); --line-strong:rgba(18,34,46,.35);
+    --radius:6px; --header-h:104px;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'IBM Plex Sans',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  /* No global smooth-scroll: nav clicks teleport instantly rather than animating. */
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+  }
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.55; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:var(--font-display); margin:0; letter-spacing:-.01em;}
+  p{margin:0;}
+  a{color:var(--accent-2);}
+  button{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--accent-2); outline-offset:3px;}
+  ::selection{background:var(--accent-2); color:#fff;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 22px;}
+  .mono{font-family:var(--font-mono);}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:8px; margin:0 0 10px;
+  }
+  .eyebrow::before{content:""; width:16px; height:1px; background:var(--accent);}
+  .eyebrow.on-dark{color:var(--accent-2);}
+  .eyebrow.on-dark::before{background:var(--accent-2);}
+
+  /* ---------- STICKY SITE HEADER (brand + tab bar + scroll-progress rail, always at the top) ---------- */
+  .site-header{position:sticky; top:0; z-index:30; background:rgba(18,34,46,0.97); backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,.08);}
+  .topbar-inner{max-width:1040px; margin:0 auto; padding:11px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .brand{display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:600; font-size:13px; white-space:nowrap; color:var(--white); background:none; border:none; padding:0; cursor:pointer;}
+  .brand svg{width:19px; height:19px; flex-shrink:0;}
+  .print-btn{
+    background:transparent; border:1px solid rgba(255,255,255,.25); color:var(--white);
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase;
+    padding:6px 11px; border-radius:3px; cursor:pointer; transition:background .15s; white-space:nowrap;
+  }
+  .print-btn:hover{background:rgba(255,255,255,.12);}
+
+  .tabs-inner{max-width:1040px; margin:0 auto; display:flex; overflow-x:auto; scrollbar-width:none; border-top:1px solid rgba(255,255,255,.08);}
+  .tabs-inner::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex:1; min-width:80px; display:flex; flex-direction:column; align-items:center; gap:4px;
+    background:none; border:none; padding:9px 5px 8px; font-family:var(--font-body); font-size:11px; font-weight:500;
+    color:rgba(247,250,249,.6); cursor:pointer; white-space:nowrap; transition:color .2s;
+    border-bottom:2px solid transparent;
+  }
+  .tab-btn svg{width:17px; height:17px;}
+  .tab-btn svg *{stroke:currentColor; fill:none;}
+  .tab-btn.active{color:var(--accent); border-bottom-color:var(--accent);}
+  .tab-btn:hover{color:var(--white);}
+  .progress-rail{height:3px; background:rgba(255,255,255,.08);}
+  .progress-fill{height:100%; background:linear-gradient(90deg, var(--accent-2), var(--accent)); width:0%;}
+
+  /* ---------- HERO (two-column, matches the main build-manual look) ---------- */
+  .hero{background:radial-gradient(ellipse at 20% -10%, #1D3A4D 0%, var(--ink) 60%); color:var(--white); position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.08);}
+  .hero::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size:38px 38px;
+  }
+  .hero-inner{max-width:1040px; margin:0 auto; padding:clamp(40px,6vw,64px) 22px clamp(32px,5vw,48px); position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:36px; align-items:center;}
+  @media (max-width:860px){ .hero-inner{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(28px,4.6vw,46px); line-height:1.06; font-weight:700; margin-bottom:16px;}
+  .hero h1 em{font-style:normal; color:var(--accent-2);}
+  .hero p.lead{font-size:15.5px; color:rgba(247,250,249,.72); max-width:48ch; margin-bottom:24px;}
+  .hero-stats{display:flex; gap:24px; flex-wrap:wrap;}
+  .hero-stat .num{font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--white);}
+  .hero-stat .label{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:rgba(247,250,249,.55);}
+  .hero-art{position:relative;}
+  .hero-art svg{width:100%; height:auto; display:block;}
+  .state-label{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; fill:rgba(247,250,249,.6);}
+  .state-label.label-dark{fill:var(--ink);}
+
+  .impact-callout{
+    max-width:1040px; margin:0 auto; padding:14px 22px; background:rgba(166,61,44,.16);
+    border-top:1px solid rgba(166,61,44,.4); font-size:13px; color:#F0DAD4;
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px; text-align:left; position:relative; z-index:2;
+  }
+  .impact-callout button{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+    background:var(--grave); color:#fff; border:none; border-radius:5px; padding:7px 12px; cursor:pointer; white-space:nowrap;
+  }
+  .impact-callout button:hover{background:#8f3225;}
+
+  /* ---------- MAIN / CONTINUOUS SECTIONS ---------- */
+  main{max-width:1040px; margin:0 auto; padding:0 22px 40px;}
+  .panel{padding:46px 0 10px; border-bottom:1px dashed var(--line-strong); scroll-margin-top:var(--header-h);}
+  .panel:last-of-type{border-bottom:none;}
+  .sheet-label{font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 8px;}
+  .panel h2{font-size:clamp(22px,3.4vw,30px); margin:0 0 6px;}
+  .panel > .lede{color:var(--ink-soft); font-size:14.5px; max-width:66ch; margin:0 0 26px;}
+
+  /* ---------- OVERVIEW ---------- */
+  .fact-list{list-style:none; padding:0; margin:0 0 32px; display:grid; gap:11px;}
+  .fact-list li{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent-2); border-radius:6px; padding:13px 15px; font-size:13.5px; color:var(--ink-soft);}
+  .feature-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:13px; margin:6px 0 34px;}
+  .feature{padding:15px; background:var(--card); border:1px solid var(--line); border-radius:6px;}
+  .feature h4{font-size:14px; margin:0 0 6px; color:var(--ink);}
+  .feature p{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+  .concept-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:34px; align-items:center; margin-top:6px;}
+  .concept-grid h3{font-size:19px; margin-bottom:10px;}
+  .concept-grid > div > p{color:var(--ink-soft); font-size:13.5px;}
+  .callout-list{list-style:none; margin:18px 0 0; padding:0; display:flex; flex-direction:column; gap:11px;}
+  .callout-list li{display:flex; gap:12px; align-items:flex-start; font-size:13.5px;}
+  .callout-num{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--white); background:var(--water-deep);
+    width:21px; height:21px; min-width:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .formula{
+    margin-top:20px; font-family:var(--font-mono); font-size:12.5px; background:var(--card);
+    border:1px dashed var(--concrete); border-radius:8px; padding:14px 16px; color:var(--water-deep); line-height:1.6;
+  }
+  .callout-svg{width:100%; height:auto;}
+  @media (max-width:780px){ .concept-grid{grid-template-columns:1fr;} }
+
+  /* ---------- SIMULATION ---------- */
+  .sim-layout{display:grid; grid-template-columns:260px 1fr; gap:26px; align-items:start; margin:20px 0 16px;}
+  @media (max-width:760px){ .sim-layout{grid-template-columns:1fr;} }
+  .sim-controls{display:flex; flex-direction:column; gap:16px; background:var(--card); border:1px solid var(--line-strong); border-radius:8px; padding:18px;}
+  .sim-field label{display:block; font-size:12px; font-weight:600; margin-bottom:6px; color:var(--ink);}
+  .sim-field-row{display:flex; align-items:center; gap:10px;}
+  .sim-field input[type=range]{flex:1; accent-color:var(--accent-2);}
+  .sim-value{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); white-space:nowrap; min-width:56px; text-align:right;}
+  .sim-actions{display:flex; gap:10px; margin-top:2px; flex-wrap:wrap;}
+  .sim-stage-wrap{background:var(--ink); border-radius:10px; padding:18px;}
+  .sim-svg{width:100%; height:auto; display:block;}
+  .sim-readout{margin-top:14px; display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,255,255,.12); border-radius:6px; overflow:hidden;}
+  .sim-readout-item{background:rgba(255,255,255,.04); padding:10px 12px;}
+  .sim-readout-item .k{font-family:var(--font-mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:rgba(247,250,249,.5);}
+  .sim-readout-item .v{font-family:var(--font-mono); font-size:14px; color:#fff; margin-top:3px;}
+  .sim-status{grid-column:1/-1; padding:10px 12px; font-size:12px; color:#EAF2F5; background:rgba(255,255,255,.04); line-height:1.5;}
+  .sim-status.warn{color:#F5C9BC;}
+  .sim-note{font-size:12px; color:var(--ink-soft); margin-top:14px; max-width:70ch; line-height:1.6;}
+
+  /* ---------- FLOOD IMPACT ---------- */
+  .impact-intro{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 20px; font-size:14px; color:var(--ink-soft); margin-bottom:30px; max-width:74ch;}
+  .region-block{margin-bottom:34px;}
+  .region-head{display:flex; align-items:baseline; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+  .region-head h3{font-size:18.5px;}
+  .region-head span{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+  .stat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line-strong); border:1px solid var(--line-strong); border-radius:8px; overflow:hidden;}
+  .stat-card{background:var(--card); padding:18px 18px 16px;}
+  .stat-card .num{font-family:var(--font-display); font-size:clamp(21px,3vw,26px); font-weight:700; color:var(--grave);}
+  .stat-card .desc{font-size:12.5px; color:var(--ink-soft); margin-top:6px; line-height:1.5;}
+  @media (max-width:560px){ .stat-grid{grid-template-columns:1fr;} }
+  .impact-closing{background:var(--water-deep); color:var(--white); border-radius:8px; padding:20px 22px; font-size:14px; line-height:1.6; margin:8px 0 22px; max-width:74ch;}
+  .impact-closing b{color:var(--accent-2);}
+  .source-note{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); line-height:1.7; border-top:1px solid var(--line); padding-top:14px;}
+
+  /* ---------- MATERIALS ---------- */
+  .sync-note{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .progress-row{display:flex; align-items:center; gap:12px; margin-bottom:24px; max-width:640px; flex-wrap:wrap;}
+  .progress-track{flex:1 1 200px; height:7px; background:var(--paper-2); border:1px solid var(--line-strong); border-radius:4px; overflow:hidden;}
+  .progress-track-fill{height:100%; width:0%; background:var(--accent-2); transition:width .3s;}
+  .progress-text{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); white-space:nowrap;}
+  .reset-btn{background:none; border:1px solid var(--line-strong); color:var(--ink-soft); font-family:var(--font-mono); font-size:11px; padding:6px 11px; border-radius:5px; cursor:pointer;}
+  .reset-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .mat-cat{margin-bottom:22px;}
+  .mat-cat h3{font-size:14.5px; display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line-strong); padding-bottom:6px; margin:0 0 6px;}
+  .mat-cat h3 span{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); font-weight:400;}
+  .mat-row{display:grid; grid-template-columns:26px 1fr auto; align-items:center; gap:10px; padding:8px 4px; border-bottom:1px dashed var(--line); cursor:pointer;}
+  .mat-row:hover{background:rgba(79,168,160,.06);}
+  .mat-row:last-child{border-bottom:none;}
+  .mat-check{width:18px; height:18px; accent-color:var(--accent-2); cursor:pointer;}
+  .mat-name{font-size:13.5px;}
+  .mat-row.is-checked .mat-name{color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--line-strong);}
+  .mat-qty{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); white-space:nowrap;}
+
+  /* ---------- BUILD PHASES ---------- */
+  .phase{border:1px solid var(--line-strong); border-radius:var(--radius); margin-bottom:12px; background:var(--card); overflow:hidden;}
+  .phase-head{display:flex; align-items:stretch;}
+  .phase-toggle{flex:1; display:flex; align-items:center; gap:14px; background:none; border:none; text-align:left; padding:14px 16px; cursor:pointer; min-width:0;}
+  .phase-num{font-family:var(--font-mono); font-size:12px; color:var(--white); background:var(--ink-2); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .phase-title{flex:1; font-size:15px; font-weight:600; min-width:0;}
+  .phase-chevron{width:16px; height:16px; color:var(--ink-soft); transition:transform .2s; flex-shrink:0; align-self:center; margin-right:14px;}
+  .phase.open .phase-chevron{transform:rotate(180deg);}
+  .phase-check-wrap{display:flex; align-items:center; gap:7px; padding:14px 16px; border-left:1px solid var(--line); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); cursor:pointer; white-space:nowrap;}
+  .phase-check{width:15px; height:15px; accent-color:var(--accent-2); cursor:pointer;}
+  .phase-body{display:none; padding:0 16px 18px 60px;}
+  .phase-body.open{display:block;}
+  .phase-body ol{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:8px;}
+  .phase-body li{font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+  .phase-body li::marker{font-family:var(--font-mono); color:var(--accent); font-size:12px;}
+
+  /* ---------- TESTING ---------- */
+  .formula-box{border:1.5px solid var(--ink); background:var(--card); padding:16px 18px; max-width:680px; margin-bottom:26px; border-radius:8px;}
+  .formula-box .f-eyebrow{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px;}
+  .formula-main{font-family:var(--font-display); font-size:21px; font-weight:700; margin-bottom:8px;}
+  .formula-note{font-size:13.5px; color:var(--ink-soft); line-height:1.55;}
+  .ref-table-wrap{background:var(--card); border:1px solid var(--line-strong); border-radius:8px; padding:4px 18px; overflow-x:auto; margin-bottom:28px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  .ref-table-wrap th,.ref-table-wrap td{text-align:left; padding:11px 12px; border-bottom:1px solid var(--line);}
+  .ref-table-wrap th{font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); font-weight:500;}
+  .ref-table-wrap tr:last-child td{border-bottom:none;}
+  .table-wrap{overflow-x:auto; max-width:100%;}
+  table.testlog{min-width:620px; margin-bottom:14px;}
+  table.testlog th{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:#fff; background:var(--ink); text-align:left; padding:9px 10px;}
+  table.testlog td{border-bottom:1px solid var(--line); padding:6px;}
+  table.testlog input, table.testlog select{width:100%; border:1px solid var(--line-strong); background:#fff; padding:7px 8px; font-family:var(--font-body); font-size:13px; color:var(--ink); border-radius:3px;}
+  .row-del{background:none; border:none; color:var(--ink-soft); font-size:18px; cursor:pointer; line-height:1; padding:4px 8px;}
+  .row-del:hover{color:var(--accent);}
+  .btn{font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; padding:9px 15px; border:1.5px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer; border-radius:5px; transition:background .15s;}
+  .btn:hover{background:#243B4D;}
+  .btn-ghost{background:transparent; color:var(--ink);}
+  .btn-ghost:hover{background:rgba(18,34,46,.06);}
+  .test-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+
+  /* ---------- TEAM ---------- */
+  .team-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(205px,1fr)); gap:14px;}
+  .team-card{background:var(--ink-2); color:var(--white); border-radius:8px; padding:20px;}
+  .team-card .role-n{font-family:var(--font-mono); font-size:11px; color:var(--accent); letter-spacing:.06em;}
+  .team-card h3{font-size:15px; margin:7px 0 9px; color:#fff;}
+  .team-card ul{margin:0; padding-left:15px; font-size:12.5px; color:#CFE0E4; display:flex; flex-direction:column; gap:5px;}
+
+  .safety-box{background:var(--ink-2); color:var(--white); border-radius:8px; padding:24px 26px; margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:9px 28px;}
+  .safety-box h3{font-size:14.5px; margin-bottom:12px; grid-column:1/-1; color:#fff;}
+  .safety-box ul{list-style:none; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;}
+  .safety-box li{font-size:12.5px; color:rgba(247,250,249,.82); padding-left:16px; position:relative;}
+  .safety-box li::before{content:"!"; position:absolute; left:0; color:var(--accent); font-family:var(--font-mono); font-weight:600;}
+  @media (max-width:680px){ .safety-box{grid-template-columns:1fr;} }
+
+  footer{background:var(--ink); color:#8FA9B6; text-align:center; padding:22px 20px 14px; font-size:11.5px; font-family:var(--font-mono);}
+  .credit-strip{background:var(--ink); color:#8FA9B6; text-align:center; padding:0 20px 24px; font-family:var(--font-mono); border-top:1px solid rgba(255,255,255,.1); margin-top:4px;}
+  .credit-strip .credit-inner{max-width:1040px; margin:0 auto; padding-top:14px; display:flex; flex-direction:column; align-items:center; gap:4px;}
+  .credit-label{font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); display:flex; align-items:center; gap:8px;}
+  .credit-label::before,.credit-label::after{content:""; width:14px; height:1px; background:rgba(79,168,160,.5);}
+  .credit-name{font-family:var(--font-display); font-size:15px; letter-spacing:.03em; text-transform:uppercase; color:var(--white);}
+  .credit-role{font-size:11px; color:#8FA9B6;}
+  .credit-reg{font-size:8px; letter-spacing:.04em; color:#4E6472; margin-top:2px;}
+
+  @media (max-width:640px){
+    .tab-btn{font-size:10px; min-width:68px;}
+    .brand{font-size:11.5px;}
+  }
+  @media (max-height:480px) and (orientation:landscape){
+    .hero-inner{padding-top:24px; padding-bottom:20px;}
+  }
+  @media print{
+    .site-header,.reset-btn,.row-del,.phase-check-wrap,.test-actions,.impact-callout,.sim-actions,footer{display:none !important;}
+    .panel{border-bottom:none; scroll-margin-top:0;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="topbar-inner">
+    <button class="brand" type="button" id="brandHome" aria-label="Jump to top">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 17c1.5 1.4 3 1.4 4.5 0s3-1.4 4.5 0 3 1.4 4.5 0 3-1.4 4.5 0" stroke="#4FA8A0" stroke-width="1.6" stroke-linecap="round"/><path d="M6 13l1-6h10l1 6" stroke="#F7FAF9" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.5 7V4.5h2V7" stroke="#E2812E" stroke-width="1.6"/></svg>
+      AMPHIBIOUS HOUSE — BUILD GUIDE
+    </button>
+    <button class="print-btn" type="button" onclick="window.print()">Print guide</button>
+  </div>
+  <nav class="tabs-inner" aria-label="Jump to section">
+    <button class="tab-btn active" data-target="panel-overview" type="button">
+      <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5" stroke-width="1.6"/><line x1="8" y1="8" x2="16" y2="8" stroke-width="1.6"/><line x1="8" y1="12" x2="16" y2="12" stroke-width="1.6"/><line x1="8" y1="16" x2="13" y2="16" stroke-width="1.6"/></svg>
+      Overview
+    </button>
+    <button class="tab-btn" data-target="panel-simulation" type="button">
+      <svg viewBox="0 0 24 24"><path d="M3 9c2 0 2 3 4 3s2-3 4-3 2 3 4 3 2-3 4-3 2 3 4 3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15c2 0 2 3 4 3s2-3 4-3 2 3 4 3 2-3 4-3 2 3 4 3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Simulation
+    </button>
+    <button class="tab-btn" data-target="panel-impact" type="button">
+      <svg viewBox="0 0 24 24"><rect x="4.5" y="13.5" width="4" height="7" rx="0.6" stroke-width="1.6"/><rect x="10" y="8.5" width="4" height="12" rx="0.6" stroke-width="1.6"/><rect x="15.5" y="4" width="4" height="16.5" rx="0.6" stroke-width="1.6"/></svg>
+      Flood Impact
+    </button>
+    <button class="tab-btn" data-target="panel-materials" type="button">
+      <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5" stroke-width="1.6"/><rect x="7.5" y="7" width="3" height="3" stroke-width="1.4"/><line x1="13" y1="8.5" x2="16.5" y2="8.5" stroke-width="1.6"/><rect x="7.5" y="12" width="3" height="3" stroke-width="1.4"/><line x1="13" y1="13.5" x2="16.5" y2="13.5" stroke-width="1.6"/></svg>
+      Materials
+    </button>
+    <button class="tab-btn" data-target="panel-build" type="button">
+      <svg viewBox="0 0 24 24"><rect x="4" y="15" width="16" height="5" rx="1" stroke-width="1.6"/><rect x="6.5" y="9" width="11" height="5" rx="1" stroke-width="1.6"/><rect x="9" y="3" width="6" height="5" rx="1" stroke-width="1.6"/></svg>
+      Build
+    </button>
+    <button class="tab-btn" data-target="panel-testing" type="button">
+      <svg viewBox="0 0 24 24"><path d="M4 18 L9 10 L13 14 L20 5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="14" r="1.3" fill="currentColor" stroke="none"/></svg>
+      Testing
+    </button>
+    <button class="tab-btn" data-target="panel-team" type="button">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.1" stroke-width="1.6"/><path d="M4 19c0-3.4 2.4-5.8 5-5.8s5 2.4 5 5.8" stroke-width="1.6" stroke-linecap="round"/><circle cx="17" cy="9" r="2.5" stroke-width="1.6"/><path d="M14.7 19c.3-2.5 1.9-4.3 3.6-4.3s3.2 1.5 3.5 3.6" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Team
+    </button>
+  </nav>
+  <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow on-dark">1st-year civil engineering · team of 5</div>
+      <h1>Build a house that <em>floats</em> when the flood comes.</h1>
+      <p class="lead">A complete, testable model of an amphibious foundation — the same principle used in real flood-resilient housing in Louisiana, Vietnam and the Netherlands, scaled down to something you can build on a desk and test in a tub.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">1:25</div><div class="label">Model scale</div></div>
+        <div class="hero-stat"><div class="num">7</div><div class="label">Build phases</div></div>
+        <div class="hero-stat"><div class="num">5</div><div class="label">Team roles</div></div>
+        <div class="hero-stat"><div class="num">24</div><div class="label">Materials tracked</div></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 380 320" width="100%" height="auto" role="img" aria-label="Side-by-side diagram of the model house resting on dry ground, and floating higher on its guide posts once flooded">
+        <g transform="translate(20,10)">
+          <text x="60" y="14" class="state-label">normal / dry</text>
+          <line x1="10" y1="230" x2="150" y2="230" stroke="rgba(247,250,249,0.25)" stroke-width="1"/>
+          <line x1="35" y1="130" x2="35" y2="230" stroke="#4FA8A0" stroke-width="2" stroke-dasharray="3 4"/>
+          <line x1="125" y1="130" x2="125" y2="230" stroke="#4FA8A0" stroke-width="2" stroke-dasharray="3 4"/>
+          <rect x="20" y="205" width="120" height="18" rx="2" fill="#2A4A5E" stroke="#F7FAF9" stroke-width="1"/>
+          <rect x="45" y="150" width="70" height="55" fill="#1D3A4D" stroke="#F7FAF9" stroke-width="1.4"/>
+          <polygon points="40,150 80,120 120,150" fill="#12222E" stroke="#F7FAF9" stroke-width="1.4" stroke-linejoin="round"/>
+          <rect x="70" y="172" width="18" height="33" fill="#12222E" stroke="#E2812E" stroke-width="1.2"/>
+        </g>
+        <g transform="translate(210,10)">
+          <text x="55" y="14" class="state-label">flooded / floats</text>
+          <path d="M10 190 q15 -10 30 0 t30 0 t30 0 t30 0 t30 0" stroke="#4FA8A0" stroke-width="2" fill="none"/>
+          <line x1="35" y1="90" x2="35" y2="230" stroke="#4FA8A0" stroke-width="2" stroke-dasharray="3 4"/>
+          <line x1="125" y1="90" x2="125" y2="230" stroke="#4FA8A0" stroke-width="2" stroke-dasharray="3 4"/>
+          <rect x="10" y="230" width="150" height="4" fill="rgba(79,168,160,0.25)"/>
+          <rect x="20" y="165" width="120" height="18" rx="2" fill="#2A4A5E" stroke="#F7FAF9" stroke-width="1"/>
+          <rect x="45" y="110" width="70" height="55" fill="#1D3A4D" stroke="#F7FAF9" stroke-width="1.4"/>
+          <polygon points="40,110 80,80 120,110" fill="#12222E" stroke="#F7FAF9" stroke-width="1.4" stroke-linejoin="round"/>
+          <rect x="70" y="132" width="18" height="33" fill="#12222E" stroke="#E2812E" stroke-width="1.2"/>
+          <path d="M15 183 q5 4 0 8 M155 183 q-5 4 0 8" stroke="#4FA8A0" stroke-width="1.4" fill="none"/>
+        </g>
+        <text x="190" y="300" text-anchor="middle" class="state-label" style="letter-spacing:.1em;">guide posts keep it centred as it rises</text>
+      </svg>
+    </div>
+  </div>
+  <div class="impact-callout">
+    <span>Floods kill roughly 1,600 people a year in India alone, and have killed 218,000+ people worldwide since 1990. See why this matters →</span>
+    <button id="heroImpactBtn" type="button">Flood Impact</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section class="panel" data-panel="panel-overview" id="panel-overview">
+    <p class="sheet-label">Sec. 01 — Overview</p>
+    <h2>Grounded on a dry day. Floating on a flood day.</h2>
+    <p class="lede">Most flood defences fight the water — walls, pumps, sandbags. An amphibious foundation works with it instead: the house keeps its normal connection to the ground, and only lifts when a flood actually shows up, settling back to the exact same spot once it drops.</p>
+
+    <ul class="fact-list">
+      <li>An architecture professor began developing amphibious foundations for flood-prone Louisiana homes after Hurricane Katrina in 2006 (the Buoyant Foundation Project), and the method has since been adapted for communities in Nicaragua, Jamaica, and rice-farming villages in Vietnam.</li>
+      <li>A whole neighbourhood of amphibious homes in Maasbommel, Netherlands sits on concrete foundations with guide posts and can rise as much as 5.5 metres when the Meuse river floods. When an actual flood hit in January 2011, every home rose as designed and settled safely back down.</li>
+      <li>A 2022 paper in an Indian engineering research journal already proposed amphibious house designs as a flood-mitigation strategy for India — a genuine published starting point for your literature review.</li>
+    </ul>
+
+    <h3 style="font-size:19px; margin-bottom:12px;">Why it works for a first-year team</h3>
+    <div class="feature-row">
+      <div class="feature"><h4>Physics you already know</h4><p>Archimedes' principle and basic foundation thinking — no structural analysis software required.</p></div>
+      <div class="feature"><h4>Cheap, safe materials</h4><p>Foam board, thermocol, dowels and a plastic tub. Nothing hazardous, nothing that needs a workshop.</p></div>
+      <div class="feature"><h4>Genuinely demonstrable</h4><p>Lower it into a tub, raise the water, and it visibly rises on camera — a two-minute demo no other group will have.</p></div>
+    </div>
+
+    <div class="concept-grid">
+      <div>
+        <h3>How it fits together</h3>
+        <p>Underneath the house sits a sealed, buoyant base. As floodwater rises, that base displaces water and lifts the whole house upward. Two or more guide posts stop it drifting sideways, so it comes back down to exactly the same spot once the water drops.</p>
+        <ul class="callout-list">
+          <li><span class="callout-num">1</span><span><b>House structure</b> — lightweight walls and roof, built to sit flat on the base.</span></li>
+          <li><span class="callout-num">2</span><span><b>Flotation base</b> — sealed and watertight, sized to displace enough water to carry the house's weight.</span></li>
+          <li><span class="callout-num">3</span><span><b>Guide posts</b> — anchored into the ground, keep the rise perfectly vertical.</span></li>
+          <li><span class="callout-num">4</span><span><b>Anchor plate</b> — fixes the posts to "ground," standing in for a real pile foundation.</span></li>
+        </ul>
+        <div class="formula">
+          REQUIRED FLOAT VOLUME (cm³) ≈ TOTAL WEIGHT TO SUPPORT (g) ÷ 1 g/cm³<br>
+          <span style="color:var(--concrete)">— Archimedes' principle, since water is ~1 g/cm³. Build in a safety margin of 50–100%.</span>
+        </div>
+      </div>
+      <div>
+        <svg class="callout-svg" viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Labeled cross-section of the amphibious house model">
+          <rect x="0" y="380" width="420" height="80" fill="#DCD6C3"/>
+          <rect x="60" y="120" width="8" height="270" fill="var(--ink)"/>
+          <rect x="352" y="120" width="8" height="270" fill="var(--ink)"/>
+          <rect x="120" y="300" width="180" height="34" rx="8" fill="var(--concrete)"/>
+          <rect x="145" y="220" width="130" height="80" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+          <polygon points="138,220 282,220 210,168" fill="var(--water-deep)"/>
+          <rect x="196" y="256" width="28" height="44" fill="var(--water-deep)"/>
+          <rect x="0" y="392" width="420" height="10" fill="var(--water)" opacity="0.55"/>
+          <line x1="210" y1="190" x2="210" y2="140" stroke="var(--concrete)" stroke-width="1"/>
+          <text x="215" y="136" class="state-label label-dark">1 · House structure</text>
+          <line x1="210" y1="317" x2="330" y2="317" stroke="var(--concrete)" stroke-width="1"/>
+          <text x="335" y="321" class="state-label label-dark">2 · Flotation base</text>
+          <line x1="356" y1="230" x2="380" y2="230" stroke="var(--concrete)" stroke-width="1"/>
+          <text x="384" y="234" class="state-label label-dark">3 · Guide post</text>
+          <line x1="64" y1="385" x2="30" y2="410" stroke="var(--concrete)" stroke-width="1"/>
+          <text x="4" y="424" class="state-label label-dark">4 · Anchor plate</text>
+          <line x1="360" y1="397" x2="390" y2="397" stroke="var(--concrete)" stroke-width="1"/>
+          <text x="330" y="440" class="state-label label-dark">5 · Flood water level</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATION -->
+  <section class="panel" data-panel="panel-simulation" id="panel-simulation">
+    <p class="sheet-label">Sec. 02 — Flood Simulation</p>
+    <h2>Try the physics before you build it</h2>
+    <p class="lede">This is a live physics model, not a canned animation — it runs the exact Archimedes' principle equilibrium calculation from Phase 00 in real time. Set your model's weight and base dimensions, then raise the water and watch it find its own balance point.</p>
+
+    <div class="sim-layout">
+      <div class="sim-controls">
+        <div class="sim-field">
+          <label for="simWeight">Model weight (house + load)</label>
+          <div class="sim-field-row"><input type="range" id="simWeight" min="200" max="800" step="10" value="450"><span class="sim-value" id="simWeightVal">450 g</span></div>
+        </div>
+        <div class="sim-field">
+          <label for="simArea">Flotation base footprint</label>
+          <div class="sim-field-row"><input type="range" id="simArea" min="100" max="400" step="10" value="200"><span class="sim-value" id="simAreaVal">200 cm²</span></div>
+        </div>
+        <div class="sim-field">
+          <label for="simThickness">Flotation base thickness</label>
+          <div class="sim-field-row"><input type="range" id="simThickness" min="3" max="10" step="0.5" value="6"><span class="sim-value" id="simThicknessVal">6.0 cm</span></div>
+        </div>
+        <div class="sim-field">
+          <label for="simWater">Water level</label>
+          <div class="sim-field-row"><input type="range" id="simWater" min="0" max="30" step="0.5" value="0"><span class="sim-value" id="simWaterVal">0.0 cm</span></div>
+        </div>
+        <div class="sim-actions">
+          <button class="btn" type="button" id="simPlay">▶ Run flood</button>
+          <button class="btn btn-ghost" type="button" id="simReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="sim-stage-wrap">
+        <svg class="sim-svg" id="simSvg" viewBox="0 -20 360 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Live flood simulation diagram driven by the sliders">
+          <rect x="0" y="250" width="360" height="50" fill="#DCD6C3"/>
+          <rect x="0" y="248" width="360" height="4" fill="var(--concrete)"/>
+          <rect x="120" y="-20" width="6" height="270" fill="var(--white)" opacity="0.45"/>
+          <rect x="234" y="-20" width="6" height="270" fill="var(--white)" opacity="0.45"/>
+          <line id="simTriggerLine" x1="20" x2="340" y1="220" y2="220" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 4"/>
+          <text id="simTriggerLabel" x="24" y="214" class="mono" font-size="9" fill="var(--accent)">trigger depth</text>
+          <rect id="simWaterRect" x="10" y="250" width="340" height="0" fill="var(--water)" opacity="0.72"/>
+          <g id="simHouseGroup" transform="translate(0,0)">
+            <rect x="130" y="225" width="100" height="25" rx="4" fill="var(--concrete)"/>
+            <rect x="148" y="175" width="64" height="52" fill="var(--card)" stroke="var(--white)" stroke-width="1.6"/>
+            <polygon points="142,175 218,175 180,148" fill="var(--water-deep)" stroke="var(--white)" stroke-width="1.2"/>
+            <rect x="170" y="195" width="20" height="32" fill="var(--water-deep)"/>
+          </g>
+          <text x="20" y="272" class="mono" font-size="9" fill="rgba(247,250,249,.55)">GROUND</text>
+        </svg>
+        <div class="sim-readout">
+          <div class="sim-readout-item"><div class="k">Weight</div><div class="v" id="simWeightReadout">450 g</div></div>
+          <div class="sim-readout-item"><div class="k">Trigger depth</div><div class="v" id="simDReq">2.3 cm</div></div>
+          <div class="sim-readout-item"><div class="k">House rise</div><div class="v" id="simRise">0.0 cm</div></div>
+          <div class="sim-readout-item"><div class="k">Buoyant force</div><div class="v" id="simBuoyant">0 g</div></div>
+          <div class="sim-status" id="simStatusBox"><span id="simStatusText">Resting on the ground.</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="sim-note">The model: a constant-cross-section flotation base of footprint area A and thickness H, water density ρ = 1 g/cm³. Required submerged depth to float is d = weight ÷ A (from F = ρgV). Below that water level the house rests on the ground; once water passes it, the house rises 1:1 with the water so the base stays submerged exactly d deep — the same equilibrium math your Phase 00 calculation uses, just running live. Guide posts here allow 25cm of travel; go higher and the model shows it maxing out, same as the real one would.</p>
+  </section>
+
+  <!-- FLOOD IMPACT -->
+  <section class="panel" data-panel="panel-impact" id="panel-impact">
+    <p class="sheet-label">Sec. 03 — Flood Impact</p>
+    <h2>Why this is worth taking seriously</h2>
+    <p class="lede">Flooding isn't an abstract design constraint for a class project — it's one of India's most consistent disasters, and one of the deadliest hazard types on Earth. These figures are from public disaster-tracking sources; use them to frame your problem statement.</p>
+
+    <div class="impact-intro">This model won't fix flooding at national or global scale. But the same principle it demonstrates — letting a structure rise with the water instead of being destroyed by it — is a real, low-cost strategy already protecting homes in flood-prone places. The numbers below are the reason that strategy matters.</div>
+
+    <div class="region-block">
+      <div class="region-head"><h3>Flooding in India</h3><span>National scale</span></div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num">40M hectares</div><div class="desc">of Indian land — about 12% of the country's total area — is officially classified as flood-prone (NDMA / Rashtriya Barh Ayog).</div></div>
+        <div class="stat-card"><div class="num">~1,600 lives/yr</div><div class="desc">lost to floods in India in an average year, per the National Disaster Management Authority's long-term data.</div></div>
+        <div class="stat-card"><div class="num">1,878+ deaths</div><div class="desc">recorded in India's 2024 monsoon floods and landslides, with over 351,000 people displaced across Assam, Kerala, Himachal Pradesh, Gujarat and other states.</div></div>
+        <div class="stat-card"><div class="num">235,000+ homes</div><div class="desc">destroyed or damaged by extreme weather events, floods included, in just the first nine months of 2024 (CSE India Climate Report).</div></div>
+      </div>
+    </div>
+
+    <div class="region-block">
+      <div class="region-head"><h3>Flooding worldwide</h3><span>Global scale, 1990–2024</span></div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num">218,353 deaths</div><div class="desc">caused by floods worldwide between 1990 and 2022, across 4,713 recorded flood events in 168 countries (WHO Bulletin study).</div></div>
+        <div class="stat-card"><div class="num">3.2 billion+</div><div class="desc">people affected by floods over that same 32-year period — equal to a large share of the world's current population.</div></div>
+        <div class="stat-card"><div class="num">~1/3 of deaths</div><div class="desc">occurred in South-East Asia alone, the region India sits in — more flood deaths than any other part of the world.</div></div>
+        <div class="stat-card"><div class="num">~43 million</div><div class="desc">people were affected by flooding in 2024 alone, across 132 separately recorded flood events worldwide.</div></div>
+      </div>
+    </div>
+
+    <div class="impact-closing">Amphibious foundations aren't a fix for flooding at this scale on their own — but they're one credible, testable way to keep individual homes, and the people in them, safer when the water does rise. <b>That's the engineering problem this model is a small, working piece of.</b></div>
+
+    <p class="source-note">Sources: National Disaster Management Authority (NDMA) &amp; Rashtriya Barh Ayog; a WHO Bulletin peer-reviewed study of global flood impacts, 1990–2022; ReliefWeb / Wikipedia coverage of the 2024 India floods; Centre for Science and Environment, India Climate Report 2024; international disaster-event tracking for 2024 global flood impacts. Figures are drawn from public disaster-tracking sources and are approximate — good for motivating the problem statement, worth re-checking against the primary source before quoting in a formal report.</p>
+  </section>
+
+  <!-- MATERIALS -->
+  <section class="panel" data-panel="panel-materials" id="panel-materials">
+    <p class="sheet-label">Sec. 04 — Materials</p>
+    <h2>What you'll need</h2>
+    <p class="lede">Scoped for a 1:25 scale model. Check items off as your team collects them — the list is grouped by which part of the build it belongs to.</p>
+    <p class="sync-note">✓ Progress is shared with anyone who opens this page on the same device/session. <span id="materialsStatus"></span></p>
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-track-fill" id="materialsProgressBar"></div></div>
+      <span class="progress-text" id="materialsProgressText">0 / 0 collected</span>
+      <button class="reset-btn" type="button" id="resetMaterials">Reset</button>
+    </div>
+    <div id="materialsList"></div>
+  </section>
+
+  <!-- BUILD -->
+  <section class="panel" data-panel="panel-build" id="panel-build">
+    <p class="sheet-label">Sec. 05 — Build Phases</p>
+    <h2>Seven phases, start to finish</h2>
+    <p class="lede">Expand a phase for its sub-steps, and check it off when it's done. Work through them roughly in order — later phases assume earlier ones are dry and glued.</p>
+    <p class="sync-note">✓ Progress is shared across your team. <span id="phasesStatus"></span></p>
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-track-fill" id="phasesProgressBar"></div></div>
+      <span class="progress-text" id="phasesProgressText">0 / 7 phases complete</span>
+      <button class="reset-btn" type="button" id="resetPhases">Reset</button>
+    </div>
+    <div id="phasesList"></div>
+
+    <div class="safety-box">
+      <h3>Before you start</h3>
+      <ul>
+        <li>Use the glue gun and craft knife under faculty/lab supervision — both are the main injury risk here.</li>
+        <li>Work on a covered table; silicone sealant and paint can stain surfaces.</li>
+        <li>Test the model over a tray, not directly on the floor — leaks happen on the first attempt.</li>
+        <li>Keep phones/cameras away from the tank edge while filming the flood test.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TESTING -->
+  <section class="panel" data-panel="panel-testing" id="panel-testing">
+    <p class="sheet-label">Sec. 06 — Testing &amp; Data</p>
+    <h2>Prove that it actually floats — and floats straight</h2>
+    <p class="lede">This is the part evaluators will remember. Record real numbers from the physical model, not just a video of it working once.</p>
+
+    <div class="formula-box">
+      <span class="f-eyebrow">Archimedes' Principle · Quick Reference</span>
+      <div class="formula-main">F = ρ<sub>water</sub> × g × V<sub>displaced</sub></div>
+      <p class="formula-note">A floating object displaces water equal to its own weight. For quick model-scale estimates: since ρ<sub>water</sub> ≈ 1 g/cm³, the volume (cm³) your flotation base must displace is roughly equal to the total weight (g) it needs to support. Build in a 50–100% margin for stability and test loads — or check your numbers first in the Simulation section above.</p>
+    </div>
+
+    <div class="ref-table-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>How to measure</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td>Trigger depth</td><td>Water level (cm) when the house first lifts off</td><td>Checks your buoyancy calculation against reality</td></tr>
+          <tr><td>Maximum rise</td><td>Vertical distance travelled along the guide posts</td><td>Confirms clearance is enough for realistic flood depths</td></tr>
+          <tr><td>Load capacity</td><td>Added weight before the house sits noticeably lower</td><td>Simulates occupants + furniture</td></tr>
+          <tr><td>Stability</td><td>Visual check for tilt or sideways drift while floating</td><td>Poor stability means the guide system needs redesign</td></tr>
+          <tr><td>Descent behaviour</td><td>Does it return to the exact same resting position?</td><td>This is the entire point of the guide-post system</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:16.5px; margin-bottom:12px;">Test log</h3>
+    <p class="sync-note">✓ This log is shared with your team. <span id="testStatus"></span></p>
+    <div class="test-actions">
+      <button class="btn" type="button" id="addRowBtn">+ Add row</button>
+      <button class="btn btn-ghost" type="button" id="resetTest">Reset log</button>
+    </div>
+    <div class="table-wrap">
+      <table class="testlog">
+        <thead>
+          <tr><th style="width:60px;">Trial</th><th style="width:110px;">Water level (cm)</th><th style="width:90px;">Lifted?</th><th style="width:100px;">Load added (g)</th><th>Notes</th><th style="width:36px;"></th></tr>
+        </thead>
+        <tbody id="testLogBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="panel" data-panel="panel-team" id="panel-team">
+    <p class="sheet-label">Sec. 07 — Team of Five</p>
+    <h2>Who does what</h2>
+    <p class="lede">Five roles, five people — everyone owns a real piece of the outcome, and everyone should still understand the whole build.</p>
+    <div class="team-grid" id="teamGrid"></div>
+  </section>
+
+</main>
+
+<footer>
+  <p>AMPHIBIOUS FOUNDATION MODEL HOUSE — a first-year civil engineering group project. Build it, flood it, measure it, write it up.</p>
+</footer>
+
+<div class="credit-strip">
+  <div class="credit-inner">
+    <span class="credit-label">Made by</span>
+    <span class="credit-name">Ashish Tanwar</span>
+    <span class="credit-role">Team Leader · BTEC Civil Engineering, 1st Year</span>
+    <span class="credit-reg">Reg. No. 12605940</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---------------- data ----------------
+  var MATERIALS = [
+    { category:"House Structure", items:[
+      { id:"m1", name:"Foam board / thermocol sheet, 5mm", qty:"2 sheets (A1)" },
+      { id:"m2", name:"Craft knife + cutting mat", qty:"1 set" },
+      { id:"m3", name:"Hot glue gun + glue sticks", qty:"1 set" },
+      { id:"m4", name:"Ruler, set square, pencil", qty:"1 set" },
+      { id:"m5", name:"Acrylic paint + brushes (finishing)", qty:"optional" }
+    ]},
+    { category:"Flotation Base", items:[
+      { id:"m6", name:"Sealed thermocol/EPS blocks, 10×10×5cm, or 4–6 sealed 500ml bottles", qty:"3–6 pcs" },
+      { id:"m7", name:"Waterproof sealant (silicone / M-seal)", qty:"1 tube" },
+      { id:"m8", name:"Waterproof tape", qty:"1 roll" },
+      { id:"m9", name:"Mounting board (platform for house)", qty:"1" }
+    ]},
+    { category:"Guide Post System", items:[
+      { id:"m10", name:"Wooden dowels or thin PVC rods, 8–10mm dia", qty:"4 pcs × 40–45cm" },
+      { id:"m11", name:"Small eyelets / sleeves for smooth sliding", qty:"4 pcs" },
+      { id:"m12", name:"Heavy base board (anchor plate)", qty:"1" },
+      { id:"m13", name:"Wood glue or small screws", qty:"1 set" }
+    ]},
+    { category:"Flood Test Rig", items:[
+      { id:"m14", name:"Transparent tub or tank, at least 50×40×30cm", qty:"1" },
+      { id:"m15", name:"Bucket or hose (controlled water source)", qty:"1" },
+      { id:"m16", name:"Waterproof marker + ruler (water-level scale)", qty:"1 set" },
+      { id:"m17", name:"Stopwatch (a phone works)", qty:"1" }
+    ]},
+    { category:"Load & Measurement", items:[
+      { id:"m18", name:"Coins, washers, or small stones (test loads)", qty:"assorted" },
+      { id:"m19", name:"Digital or kitchen weighing scale", qty:"1" },
+      { id:"m20", name:"Measuring tape", qty:"1" }
+    ]},
+    { category:"Documentation", items:[
+      { id:"m21", name:"Phone or camera, photo + video", qty:"1" },
+      { id:"m22", name:"Notebook or spreadsheet for data log", qty:"1" },
+      { id:"m23", name:"Poster board / chart paper for the demo", qty:"2 sheets" },
+      { id:"m24", name:"Small figures / props for scale reference", qty:"optional" }
+    ]}
+  ];
+
+  var PHASES = [
+    { id:"p1", num:"01", title:"Design & Calculate", steps:[
+      "Choose a scale (1:25 works well) and a rough house footprint (~20 × 15cm).",
+      "Weigh major components as you build them, so you know the total model weight.",
+      "Apply Archimedes' principle: volume needed (cm³) ≈ total weight (g) — then add a 50–100% margin for stability and test loads.",
+      "Sketch a plan and elevation, marking the four guide-post positions."
+    ]},
+    { id:"p2", num:"02", title:"Build the Flotation Base", steps:[
+      "Cut your thermocol block (or arrange sealed bottles in a waterproof tray) to the calculated volume.",
+      "Seal every seam and joint with waterproof sealant — a single leak sinks the model.",
+      "Mark and cut four corner holes/sleeves sized to slide freely over the guide-post dowels.",
+      "Float-test the bare base alone in a bucket before building anything on it."
+    ]},
+    { id:"p3", num:"03", title:"Build the House", steps:[
+      "Cut foam-board wall, roof, and floor panels from your sketch.",
+      "Assemble with hot glue, reinforcing every corner from the inside.",
+      "Mount the finished house onto the flotation base, keeping the weight centred.",
+      "Paint or finish once the glue has fully cured."
+    ]},
+    { id:"p4", num:"04", title:"Install Guide Posts", steps:[
+      "Anchor the four dowels vertically to the floor of your test tub — this stands in for the ground.",
+      "Slide the house + flotation assembly onto the posts through the corner sleeves.",
+      "Posts must be perfectly vertical and parallel, or the model will jam.",
+      "Test the slide by hand before adding any water."
+    ]},
+    { id:"p5", num:"05", title:"Set Up the Test Rig", steps:[
+      "Place the assembled model inside the tub, posts anchored to the floor.",
+      "Mark a clear water-level scale on the inside of the tub, in centimetre increments.",
+      "Confirm the tub base is level, and keep the bucket/hose ready for a controlled, steady fill."
+    ]},
+    { id:"p6", num:"06", title:"Run the Flood Test", steps:[
+      "Add water slowly and steadily in 2cm steps, noting the level and whether the house has begun to rise at each one.",
+      "Record the exact water level the moment the house first lifts off — this is your trigger depth.",
+      "Add small weights inside to simulate load, and repeat the run.",
+      "Drain the tank slowly and confirm the house re-centres on exactly the same spot.",
+      "Repeat 2–3 times and average your readings before analysing them."
+    ]},
+    { id:"p7", num:"07", title:"Analyze & Present", steps:[
+      "Plot water level vs. house lift-off and compare it against your Phase 01 calculation (and the Simulation section) — explain any gap.",
+      "Compare it against a conventional elevated (stilt) foundation on practical terms: space used, material efficiency, and how easily it could be reversed or repaired.",
+      "Note design improvements you'd make next time — tighter sleeves, more flotation volume, better sealing.",
+      "Compile your report, poster/slides, and data log, and assign who presents which part."
+    ]}
+  ];
+
+  var TEAM = [
+    { seal:"RL", role:"Research Lead", desc:"Owns the literature review and problem statement.",
+      tasks:["Gathers case studies (Buoyant Foundation Project, Maasbommel, Indian papers)","Writes the problem statement & scope","Tracks references for the report"] },
+    { seal:"DE", role:"Design Engineer", desc:"Owns the numbers behind the model.",
+      tasks:["Buoyancy / Archimedes calculations","Structural sketches & scale drawings","Signs off on dimensions before building"] },
+    { seal:"CL", role:"Construction Lead", desc:"Owns the physical build.",
+      tasks:["Cuts & assembles house and flotation base","Installs guide posts","Keeps the model structurally sound"] },
+    { seal:"TA", role:"Testing & Data Analyst", desc:"Owns the flood-test rig and results.",
+      tasks:["Runs the flood-simulation trials","Logs water level / load / position data","Checks results against calculations"] },
+    { seal:"DP", role:"Documentation & Presentation Lead", desc:"Owns how the project gets told.",
+      tasks:["Compiles the written report","Builds the poster / slide deck","Coordinates the live demo"] }
+  ];
+
+  // ---------------- storage helpers (graceful fallback if window.storage is unavailable) ----------------
+  async function loadJSON(key, shared, fallback){
+    try{
+      if(!window.storage || typeof window.storage.get !== 'function') return fallback;
+      var res = await window.storage.get(key, shared);
+      if(res && res.value) return JSON.parse(res.value);
+      return fallback;
+    }catch(e){ return fallback; }
+  }
+  async function saveJSON(key, shared, value, statusEl){
+    try{
+      if(!window.storage || typeof window.storage.set !== 'function'){ if(statusEl) statusEl.textContent=''; return; }
+      if(statusEl) statusEl.textContent = 'Saving…';
+      var res = await window.storage.set(key, JSON.stringify(value), shared);
+      if(statusEl) statusEl.textContent = res ? 'Synced ✓' : 'Save failed — try again';
+    }catch(e){ if(statusEl) statusEl.textContent = ''; }
+  }
+  function escapeHtml(s){
+    return (s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+  }
+
+  // ---------------- materials ----------------
+  var materialsChecked = new Set();
+  async function initMaterials(){
+    var list = document.getElementById('materialsList');
+    list.innerHTML = '';
+    MATERIALS.forEach(function(cat){
+      var catEl = document.createElement('div');
+      catEl.className = 'mat-cat';
+      var h = document.createElement('h3');
+      h.textContent = cat.category;
+      catEl.appendChild(h);
+      cat.items.forEach(function(item){
+        var row = document.createElement('label');
+        row.className = 'mat-row';
+        row.setAttribute('for', 'chk-' + item.id);
+        var cb = document.createElement('input');
+        cb.type = 'checkbox'; cb.id = 'chk-' + item.id; cb.className = 'mat-check';
+        cb.addEventListener('change', function(){
+          row.classList.toggle('is-checked', cb.checked);
+          if(cb.checked) materialsChecked.add(item.id); else materialsChecked.delete(item.id);
+          updateMaterialsProgress();
+          saveJSON('materials-checklist', true, Array.from(materialsChecked), document.getElementById('materialsStatus'));
+        });
+        var name = document.createElement('span');
+        name.className = 'mat-name'; name.textContent = item.name;
+        var qty = document.createElement('span');
+        qty.className = 'mat-qty'; qty.textContent = item.qty;
+        row.appendChild(cb); row.appendChild(name); row.appendChild(qty);
+        catEl.appendChild(row);
+      });
+      list.appendChild(catEl);
+    });
+    var saved = await loadJSON('materials-checklist', true, []);
+    saved.forEach(function(id){
+      materialsChecked.add(id);
+      var cb = document.getElementById('chk-' + id);
+      if(cb){ cb.checked = true; cb.closest('.mat-row').classList.add('is-checked'); }
+    });
+    updateMaterialsProgress();
+  }
+  function updateMaterialsProgress(){
+    var total = MATERIALS.reduce(function(a,c){ return a + c.items.length; }, 0);
+    var done = materialsChecked.size;
+    document.getElementById('materialsProgressText').textContent = done + ' / ' + total + ' collected';
+    document.getElementById('materialsProgressBar').style.width = (total ? (done/total*100) : 0) + '%';
+  }
+
+  // ---------------- build phases ----------------
+  var phasesChecked = new Set();
+  async function initPhases(){
+    var wrap = document.getElementById('phasesList');
+    wrap.innerHTML = '';
+    PHASES.forEach(function(ph){
+      var el = document.createElement('div');
+      el.className = 'phase';
+      var head = document.createElement('div');
+      head.className = 'phase-head';
+
+      var toggle = document.createElement('button');
+      toggle.className = 'phase-toggle';
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.innerHTML = '<span class="phase-num">' + ph.num + '</span><span class="phase-title">' + ph.title + '</span>';
+
+      var chevron = document.createElement('svg');
+      chevron.setAttribute('class','phase-chevron');
+      chevron.setAttribute('viewBox','0 0 24 24');
+      chevron.innerHTML = '<path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/>';
+
+      var checkWrap = document.createElement('label');
+      checkWrap.className = 'phase-check-wrap';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.className = 'phase-check'; cb.id = 'pchk-' + ph.id;
+      var cbSpan = document.createElement('span');
+      cbSpan.textContent = 'Done';
+      checkWrap.appendChild(cb); checkWrap.appendChild(cbSpan);
+
+      head.appendChild(toggle); head.appendChild(chevron); head.appendChild(checkWrap);
+
+      var body = document.createElement('div');
+      body.className = 'phase-body';
+      var ol = document.createElement('ol');
+      ph.steps.forEach(function(s){ var li = document.createElement('li'); li.textContent = s; ol.appendChild(li); });
+      body.appendChild(ol);
+
+      el.appendChild(head); el.appendChild(body);
+      wrap.appendChild(el);
+
+      toggle.addEventListener('click', function(){
+        var isOpen = body.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        el.classList.toggle('open', isOpen);
+      });
+      cb.addEventListener('change', function(){
+        if(cb.checked) phasesChecked.add(ph.id); else phasesChecked.delete(ph.id);
+        updatePhasesProgress();
+        saveJSON('build-phases-progress', true, Array.from(phasesChecked), document.getElementById('phasesStatus'));
+      });
+    });
+    var saved = await loadJSON('build-phases-progress', true, []);
+    saved.forEach(function(id){
+      phasesChecked.add(id);
+      var cb = document.getElementById('pchk-' + id);
+      if(cb) cb.checked = true;
+    });
+    updatePhasesProgress();
+    var firstPhase = wrap.children[0];
+    if(firstPhase){
+      firstPhase.classList.add('open');
+      firstPhase.querySelector('.phase-body').classList.add('open');
+      firstPhase.querySelector('.phase-toggle').setAttribute('aria-expanded','true');
+    }
+  }
+  function updatePhasesProgress(){
+    var total = PHASES.length;
+    var done = phasesChecked.size;
+    document.getElementById('phasesProgressText').textContent = done + ' / ' + total + ' phases complete';
+    document.getElementById('phasesProgressBar').style.width = (total ? (done/total*100) : 0) + '%';
+  }
+
+  // ---------------- testing log ----------------
+  var testRows = [];
+  var testRowSeq = 1;
+  function newRow(){ return { id:'r' + (testRowSeq++), trial:'', level:'', lifted:'', load:'', notes:'' }; }
+
+  async function initTestLog(){
+    var saved = await loadJSON('test-log', true, null);
+    if(saved && saved.length){
+      testRows = saved;
+      testRowSeq = Math.max.apply(null, saved.map(function(r){ return parseInt((r.id||'r0').slice(1)) || 0; })) + 1;
+    } else {
+      testRows = [newRow()];
+    }
+    renderTestLog();
+  }
+  function renderTestLog(){
+    var tbody = document.getElementById('testLogBody');
+    tbody.innerHTML = '';
+    testRows.forEach(function(row){
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="text" value="' + escapeHtml(row.trial) + '" data-field="trial" data-id="' + row.id + '" placeholder="1"></td>' +
+        '<td><input type="text" value="' + escapeHtml(row.level) + '" data-field="level" data-id="' + row.id + '" placeholder="cm"></td>' +
+        '<td><select data-field="lifted" data-id="' + row.id + '">' +
+          '<option value=""' + (row.lifted==='' ? ' selected' : '') + '>—</option>' +
+          '<option value="Y"' + (row.lifted==='Y' ? ' selected' : '') + '>Y</option>' +
+          '<option value="N"' + (row.lifted==='N' ? ' selected' : '') + '>N</option>' +
+        '</select></td>' +
+        '<td><input type="text" value="' + escapeHtml(row.load) + '" data-field="load" data-id="' + row.id + '" placeholder="g"></td>' +
+        '<td><input type="text" value="' + escapeHtml(row.notes) + '" data-field="notes" data-id="' + row.id + '" placeholder="observations"></td>' +
+        '<td><button type="button" class="row-del" data-id="' + row.id + '" aria-label="Delete row">×</button></td>';
+      tbody.appendChild(tr);
+    });
+    tbody.querySelectorAll('input,select').forEach(function(inp){
+      inp.addEventListener('change', function(){
+        var id = inp.dataset.id, field = inp.dataset.field;
+        var row = testRows.find(function(r){ return r.id === id; });
+        if(row){ row[field] = inp.value; persistTestLog(); }
+      });
+    });
+    tbody.querySelectorAll('.row-del').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        testRows = testRows.filter(function(r){ return r.id !== btn.dataset.id; });
+        if(testRows.length === 0) testRows = [newRow()];
+        renderTestLog();
+        persistTestLog();
+      });
+    });
+  }
+  function persistTestLog(){
+    saveJSON('test-log', true, testRows, document.getElementById('testStatus'));
+  }
+
+  // ---------------- team ----------------
+  function initTeam(){
+    var grid = document.getElementById('teamGrid');
+    grid.innerHTML = '';
+    TEAM.forEach(function(t){
+      var card = document.createElement('div');
+      card.className = 'team-card';
+      card.innerHTML =
+        '<div class="role-n">' + t.seal + '</div>' +
+        '<h3>' + t.role + '</h3>' +
+        '<p style="font-size:12.5px;color:#CFE0E4;margin-bottom:9px;">' + t.desc + '</p>' +
+        '<ul>' + t.tasks.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>';
+      grid.appendChild(card);
+    });
+  }
+
+  // ---------------- flood simulation physics ----------------
+  var SIM_PX_PER_CM = 6;
+  var SIM_GROUND_Y = 250;
+  var SIM_MAX_TRAVEL = 25; // cm, fixed guide-post travel for this rig
+  var simState = { W:450, A:200, H:6, L:0, playing:false, rafId:null, lastTs:null };
+
+  function computeSim(W, A, H, L){
+    var dRequired = W / A; // cm — depth of base that must be submerged to float
+    var undersized = dRequired > H;
+    var state, houseRise, submergedDepth;
+    if(undersized){
+      state = (L >= H) ? 'undersized-submerged' : 'undersized';
+      houseRise = 0;
+      submergedDepth = Math.min(L, H);
+    } else if(L < dRequired){
+      state = 'grounded';
+      houseRise = 0;
+      submergedDepth = Math.min(L, H);
+    } else {
+      var rise = L - dRequired;
+      if(rise >= SIM_MAX_TRAVEL){
+        state = 'maxed';
+        houseRise = SIM_MAX_TRAVEL;
+      } else {
+        state = 'floating';
+        houseRise = rise;
+      }
+      submergedDepth = dRequired;
+    }
+    var buoyantForce = A * submergedDepth; // grams-equivalent, since rho = 1 g/cm3
+    return { dRequired:dRequired, undersized:undersized, state:state, houseRise:houseRise, submergedDepth:submergedDepth, buoyantForce:buoyantForce };
+  }
+
+  var SIM_MESSAGES = {
+    'grounded': 'Resting on the ground — buoyant force is less than the model\u2019s weight yet.',
+    'floating': 'Floating — buoyant force exactly balances the weight at this water level.',
+    'maxed': 'Reached the top of the 25cm guide posts — this flood depth would need taller posts.',
+    'undersized': 'This base can\u2019t generate enough lift even fully submerged. Increase footprint area or base thickness.',
+    'undersized-submerged': 'Base is fully submerged and still can\u2019t lift the house — water is now reaching the house itself. Redesign the base.'
+  };
+
+  function renderSim(){
+    var s = computeSim(simState.W, simState.A, simState.H, simState.L);
+
+    var waterH = simState.L * SIM_PX_PER_CM;
+    var waterEl = document.getElementById('simWaterRect');
+    if(waterEl){ waterEl.setAttribute('y', SIM_GROUND_Y - waterH); waterEl.setAttribute('height', Math.max(0, waterH)); }
+
+    var housePx = s.houseRise * SIM_PX_PER_CM;
+    var houseGroup = document.getElementById('simHouseGroup');
+    if(houseGroup){ houseGroup.setAttribute('transform', 'translate(0,' + (-housePx) + ')'); }
+
+    var cappedTriggerCm = Math.min(s.dRequired, 34);
+    var triggerY = SIM_GROUND_Y - cappedTriggerCm * SIM_PX_PER_CM;
+    var triggerLine = document.getElementById('simTriggerLine');
+    if(triggerLine){ triggerLine.setAttribute('y1', triggerY); triggerLine.setAttribute('y2', triggerY); }
+    var triggerLabel = document.getElementById('simTriggerLabel');
+    if(triggerLabel){ triggerLabel.setAttribute('y', triggerY - 6); triggerLabel.textContent = 'trigger depth ' + s.dRequired.toFixed(1) + 'cm'; }
+
+    setText('simWeightReadout', simState.W + ' g');
+    setText('simDReq', s.dRequired.toFixed(1) + ' cm');
+    setText('simRise', s.houseRise.toFixed(1) + ' cm');
+    setText('simBuoyant', s.buoyantForce.toFixed(0) + ' g');
+    setText('simStatusText', SIM_MESSAGES[s.state] || '');
+
+    var statusBox = document.getElementById('simStatusBox');
+    if(statusBox){ statusBox.classList.toggle('warn', s.state === 'maxed' || s.undersized); }
+  }
+  function setText(id, val){ var el = document.getElementById(id); if(el) el.textContent = val; }
+
+  function bindSim(){
+    var wEl = document.getElementById('simWeight'), wVal = document.getElementById('simWeightVal');
+    var aEl = document.getElementById('simArea'), aVal = document.getElementById('simAreaVal');
+    var hEl = document.getElementById('simThickness'), hVal = document.getElementById('simThicknessVal');
+    var lEl = document.getElementById('simWater'), lVal = document.getElementById('simWaterVal');
+    if(!wEl || !aEl || !hEl || !lEl) return;
+
+    function syncFromInputs(){
+      simState.W = parseFloat(wEl.value); wVal.textContent = simState.W + ' g';
+      simState.A = parseFloat(aEl.value); aVal.textContent = simState.A + ' cm\u00B2';
+      simState.H = parseFloat(hEl.value); hVal.textContent = simState.H.toFixed(1) + ' cm';
+      simState.L = parseFloat(lEl.value); lVal.textContent = simState.L.toFixed(1) + ' cm';
+      renderSim();
+    }
+    [wEl, aEl, hEl, lEl].forEach(function(el){ el.addEventListener('input', syncFromInputs); });
+
+    var playBtn = document.getElementById('simPlay');
+    if(playBtn){
+      playBtn.addEventListener('click', function(){
+        if(simState.playing) stopPlay(); else startPlay(lEl, lVal);
+      });
+    }
+    var resetBtn = document.getElementById('simReset');
+    if(resetBtn){
+      resetBtn.addEventListener('click', function(){
+        stopPlay();
+        simState.L = 0; lEl.value = 0; lVal.textContent = '0.0 cm';
+        renderSim();
+      });
+    }
+    syncFromInputs();
+  }
+  function startPlay(lEl, lVal){
+    simState.playing = true;
+    var playBtn = document.getElementById('simPlay');
+    if(playBtn) playBtn.textContent = '\u23F8 Pause';
+    simState.lastTs = null;
+    function step(ts){
+      if(!simState.playing) return;
+      if(simState.lastTs == null) simState.lastTs = ts;
+      var dt = (ts - simState.lastTs) / 1000;
+      simState.lastTs = ts;
+      simState.L = Math.min(30, simState.L + dt * 3); // rises 3 cm per second
+      lEl.value = simState.L;
+      lVal.textContent = simState.L.toFixed(1) + ' cm';
+      renderSim();
+      if(simState.L >= 30){ stopPlay(); return; }
+      simState.rafId = requestAnimationFrame(step);
+    }
+    simState.rafId = requestAnimationFrame(step);
+  }
+  function stopPlay(){
+    simState.playing = false;
+    var playBtn = document.getElementById('simPlay');
+    if(playBtn) playBtn.textContent = '\u25B6 Run flood';
+    if(simState.rafId) cancelAnimationFrame(simState.rafId);
+  }
+
+  // ---------------- navigation: instant jump + scroll-spy + scroll progress ----------------
+  function jumpTo(id){
+    var target = document.getElementById(id);
+    if(!target) return;
+    target.scrollIntoView({ behavior:'auto', block:'start' });
+    setActiveTab(id);
+  }
+  function setActiveTab(id){
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.target === id); });
+  }
+  function bindNav(){
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ jumpTo(btn.dataset.target); });
+    });
+    var heroBtn = document.getElementById('heroImpactBtn');
+    if(heroBtn){ heroBtn.addEventListener('click', function(){ jumpTo('panel-impact'); }); }
+    var brandBtn = document.getElementById('brandHome');
+    if(brandBtn){ brandBtn.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'auto' }); setActiveTab('panel-overview'); }); }
+  }
+  function bindScrollSpy(){
+    if(typeof IntersectionObserver === 'undefined') return;
+    var headerH = 104;
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ setActiveTab(entry.target.id); }
+      });
+    }, { rootMargin: '-' + headerH + 'px 0px -65% 0px', threshold: 0 });
+    document.querySelectorAll('.panel').forEach(function(p){ observer.observe(p); });
+  }
+  function bindScrollProgress(){
+    var fill = document.getElementById('progressFill');
+    if(!fill) return;
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - doc.clientHeight;
+      var pct = max > 0 ? Math.min(100, (doc.scrollTop / max) * 100) : 0;
+      fill.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(update); ticking = true; }
+    }, { passive:true });
+    update();
+  }
+
+  // ---------------- resets ----------------
+  function bindResets(){
+    document.getElementById('resetMaterials').addEventListener('click', async function(){
+      materialsChecked.clear();
+      document.querySelectorAll('.mat-check').forEach(function(cb){ cb.checked = false; cb.closest('.mat-row').classList.remove('is-checked'); });
+      updateMaterialsProgress();
+      await saveJSON('materials-checklist', true, [], document.getElementById('materialsStatus'));
+    });
+    document.getElementById('resetPhases').addEventListener('click', async function(){
+      phasesChecked.clear();
+      document.querySelectorAll('.phase-check').forEach(function(cb){ cb.checked = false; });
+      updatePhasesProgress();
+      await saveJSON('build-phases-progress', true, [], document.getElementById('phasesStatus'));
+    });
+    document.getElementById('resetTest').addEventListener('click', async function(){
+      testRows = [newRow()];
+      renderTestLog();
+      await saveJSON('test-log', true, testRows, document.getElementById('testStatus'));
+    });
+    document.getElementById('addRowBtn').addEventListener('click', function(){
+      testRows.push(newRow());
+      renderTestLog();
+      persistTestLog();
+    });
+  }
+
+  // ---------------- init ----------------
+  document.addEventListener('DOMContentLoaded', function(){
+    try{ bindNav(); }catch(e){ console.error('bindNav failed', e); }
+    try{ bindScrollSpy(); }catch(e){ console.error('bindScrollSpy failed', e); }
+    try{ bindScrollProgress(); }catch(e){ console.error('bindScrollProgress failed', e); }
+    try{ bindSim(); }catch(e){ console.error('bindSim failed', e); }
+    try{ bindResets(); }catch(e){ console.error('bindResets failed', e); }
+    try{ initTeam(); }catch(e){ console.error('initTeam failed', e); }
+    initMaterials().catch(function(e){ console.error('initMaterials failed', e); });
+    initPhases().catch(function(e){ console.error('initPhases failed', e); });
+    initTestLog().catch(function(e){ console.error('initTestLog failed', e); });
+  });
+})();
+</script>
+</body>
+</html>
